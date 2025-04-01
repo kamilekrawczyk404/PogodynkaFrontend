@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 const Navigation = () => {
     return (
-        <div><Link href={'/'}>Pogodynka</Link></div>
+        <div><Link href={'/'}>Pogodynkaaa</Link></div>
     )
 }
 
