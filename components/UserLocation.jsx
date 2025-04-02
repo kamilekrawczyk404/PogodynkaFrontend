@@ -11,8 +11,9 @@ const UserLocation = () => {
   const onGetGeolocation = async (geolocation) => {
     console.log(geolocation);
   };
+
   return (
-    <div className={"flex gap-2 items-center"}>
+    <div className={"flex gap-2 items-center w-full"}>
       <SearchInput
         placeholder={"Search location..."}
         onSubmit={onLocationSubmit}

@@ -59,54 +59,51 @@ const AuthenticationForms = ({ className = "" }) => {
             <button
               type={"button"}
               onClick={() => setSelectedFormTypeIndex(forms.indexOf(button))}
+              className={"hover:cursor-pointer"}
             >
               {button.name}
             </button>
           </ActiveIndicator>
         )}
       />
-      <AnimatePresence mode={"popLayout"}>
-        <div className={"relative w-full h-full gap-4"}>
-          {forms.map(
-            (form, key) =>
-              key === selectedFormTypeIndex && (
-                <motion.div
-                  key={form.type}
-                  variants={{
-                    initial: {
-                      opacity: 0,
-                      x: 100,
-                      display: "hidden",
-                    },
-                    animate: {
-                      opacity: 1,
-                      x: 0,
-                      display: "block",
-                    },
-                    exit: {
-                      opacity: 0,
-                      x: -200,
-                    },
-                  }}
-                  initial="initial"
-                  animate={
-                    selectedFormTypeIndex === key ? "animate" : "initial"
-                  }
-                  transition={{
-                    duration: 0.3,
-                    ease: "easeInOut",
-                    type: "spring",
-                  }}
-                  className={`h-full w-full ${
-                    selectedFormTypeIndex === key ? "" : ""
-                  }`}
-                >
-                  <Form {...form} />
-                </motion.div>
-              ),
-          )}
-        </div>
-      </AnimatePresence>
+      <div className={"relative w-full h-full gap-4"}>
+        {forms.map(
+          (form, key) =>
+            key === selectedFormTypeIndex && (
+              <motion.div
+                key={form.type}
+                variants={{
+                  initial: {
+                    opacity: 0,
+                    x: 100,
+                    display: "hidden",
+                  },
+                  animate: {
+                    opacity: 1,
+                    x: 0,
+                    display: "block",
+                  },
+                  exit: {
+                    opacity: 0,
+                    x: -200,
+                  },
+                }}
+                initial="initial"
+                animate={selectedFormTypeIndex === key ? "animate" : "initial"}
+                transition={{
+                  duration: 0.3,
+                  ease: "easeInOut",
+                  type: "spring",
+                }}
+                className={`h-full w-full ${
+                  selectedFormTypeIndex === key ? "" : ""
+                }`}
+              >
+                <Form {...form} />
+              </motion.div>
+            ),
+        )}
+      </div>
     </PopUpContainer>
   );
 };

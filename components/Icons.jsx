@@ -1,30 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCloud,
-  faCloudSunRain,
-  faDroplet,
+  faEye,
+  faLocationArrow,
   faLocationCrosshairs,
   faMagnifyingGlass,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 export const Icons = {
-  Rain: ({ className = "" }) => (
-    <FontAwesomeIcon
-      className={`text-blue-700 ${className}`}
-      icon={faDroplet}
-    />
-  ),
-  Cloud: ({ className = "" }) => (
+  WindDirection: ({ className = "" }) => (
     <FontAwesomeIcon
       className={`text-neutral-300 ${className}`}
-      icon={faCloud}
-    />
-  ),
-  CloudSunRun: ({ className = "" }) => (
-    <FontAwesomeIcon
-      className={`text-neutral-300 ${className}`}
-      icon={faCloudSunRain}
+      icon={faLocationArrow}
     />
   ),
   MagnifyingGlass: ({ className = "" }) => (
@@ -44,5 +31,8 @@ export const Icons = {
       className={`text-neutral-300 ${className}`}
       icon={faLocationCrosshairs}
     />
+  ),
+  Eye: ({ className = "" }) => (
+    <FontAwesomeIcon className={`text-neutral-300 ${className}`} icon={faEye} />
   ),
 };

@@ -13,7 +13,7 @@ const SearchInput = ({ onSubmit, ...props }) => {
         className={"absolute left-2 top-1/2 -translate-y-1/2"}
         onClick={() => onSubmit(search)}
       >
-        <Icons.MagnifyingGlass className={"w-4 "} />
+        <Icons.MagnifyingGlass className={"w-4"} />
       </button>
 
       <Input

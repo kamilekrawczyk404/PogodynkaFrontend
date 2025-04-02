@@ -5,7 +5,7 @@ import { styles } from "@/styles";
 const ActiveIndicator = ({ layoutId, active, children }) => {
   return (
     <div
-      className={`relative rounded-xl px-3 py-1 border-[1px] ${
+      className={`relative rounded-xl px-3 py-1 border-[1px] hover:cursor-pointer ${
         active ? `${styles.borderColorFocus}` : `${styles.borderColor}`
       }`}
     >
