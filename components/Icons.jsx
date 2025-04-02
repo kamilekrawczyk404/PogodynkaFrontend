@@ -3,6 +3,9 @@ import {
   faCloud,
   faCloudSunRain,
   faDroplet,
+  faLocationCrosshairs,
+  faMagnifyingGlass,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 export const Icons = {
@@ -22,6 +25,24 @@ export const Icons = {
     <FontAwesomeIcon
       className={`text-neutral-300 ${className}`}
       icon={faCloudSunRain}
+    />
+  ),
+  MagnifyingGlass: ({ className = "" }) => (
+    <FontAwesomeIcon
+      className={`text-neutral-300 ${className}`}
+      icon={faMagnifyingGlass}
+    />
+  ),
+  Close: ({ className = "" }) => (
+    <FontAwesomeIcon
+      className={`text-neutral-300 ${className}`}
+      icon={faXmark}
+    />
+  ),
+  Location: ({ className = "" }) => (
+    <FontAwesomeIcon
+      className={`text-neutral-300 ${className}`}
+      icon={faLocationCrosshairs}
     />
   ),
 };

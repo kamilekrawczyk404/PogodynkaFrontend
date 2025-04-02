@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import AuthenticationForms from "@/components/AuthenticationForms";
 import PopUpContainer from "@/components/PopUpContainer";
+import OverlayContainer from "@/components/OverlayContainer";
 
 export default function Auth() {
   return (
@@ -15,11 +16,11 @@ export default function Auth() {
         <PopUpContainer
           className={`relative overflow-hidden brightness-80 basis-1/2 rounded-2xl min-h-[10rem] h-full ${styles.bodyBgColor}`}
         >
-          <div
-            className={`absolute w-fit lg:left-8 lg:top-8 md:left-4 md:top-4 top-2 left-2 bg-neutral-700/50 px-3 py-1 rounded-xl z-[10] ${styles.textDefault}`}
+          <OverlayContainer
+            className={`lg:left-8 lg:top-8 md:left-4 md:top-4 top-2 left-2`}
           >
             <Link href={"/forecast"}>Back to main page</Link>
-          </div>
+          </OverlayContainer>
           <Image
             src={"/authenticationBackground.jpg"}
             alt={"Login form image background"}
