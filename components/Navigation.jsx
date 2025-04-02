@@ -11,7 +11,7 @@ const Navigation = () => {
   const pathname = usePathname();
 
   const pathLinks = [
-    { pathname: "/forecast", name: "Weather" },
+    { pathname: "/", name: "Weather" },
     {
       pathname: "/auth",
       name: "Authorization",

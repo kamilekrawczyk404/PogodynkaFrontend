@@ -19,7 +19,7 @@ export default function Auth() {
           <OverlayContainer
             className={`lg:left-8 lg:top-8 md:left-4 md:top-4 top-2 left-2`}
           >
-            <Link href={"/forecast"}>Back to main page</Link>
+            <Link href={"/"}>Back to main page</Link>
           </OverlayContainer>
           <Image
             src={"/authenticationBackground.jpg"}

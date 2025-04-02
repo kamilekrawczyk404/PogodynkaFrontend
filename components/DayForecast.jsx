@@ -2,9 +2,9 @@ import React from "react";
 import Image from "next/image";
 import Card from "@/components/Card";
 
-const DayForecast = ({ weather, active }) => {
+const DayForecast = ({ weather, active, ...props }) => {
   return (
-    <Card className={"w-full p-4"} active={active}>
+    <Card className={"w-full p-4"} active={active} {...props}>
       <span>Sun</span>
       <div className={"relative min-h-[5rem] aspect-ratio"}>
         <Image src={"/weather/02d.svg"} alt={"Weather icon"} fill />
