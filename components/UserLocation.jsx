@@ -13,7 +13,10 @@ const UserLocation = () => {
   };
   return (
     <div className={"flex gap-2 items-center"}>
-      <SearchInput placeholder={"Search location..."} />
+      <SearchInput
+        placeholder={"Search location..."}
+        onSubmit={onLocationSubmit}
+      />
       <CurrentGeolocation onGetGeolocation={onGetGeolocation} />
     </div>
   );

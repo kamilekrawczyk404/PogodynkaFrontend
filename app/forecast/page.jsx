@@ -15,7 +15,8 @@ export default function ForecastPage() {
     >
       <div className={`flex h-full flex-col basis-1/4 ${styles.gaps}`}>
         <UserLocation />
-        <Icons.CloudSunRun className={"w-1/2"} />
+        {/*<Icons.CloudSunRun className={"text-[10rem]"} />*/}
+        <Image src={"/weather/01d.svg"} alt={"cos"} height={200} width={200} />
         <div>
           <span className={"text-5xl"}>12°C</span>
           <span>
