@@ -6,6 +6,7 @@ import { styles } from "@/styles";
 import { Icons } from "@/components/Icons";
 import { motion} from "framer-motion";
 import RolledNumber from "@/components/RolledNumber";
+import CardValue from "@/components/MainCards/CardValue";
 
 const getWindDirection = (deg) => {
   const directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
@@ -26,16 +27,7 @@ const WindStatus = () => {
 
   return (
     <WeatherMainFeature title={"Wind Status"}>
-      <h3 className={"text-4xl font-semibold flex gap-1 items-end"}>
-        <RolledNumber
-          number={getKilometersPerHour(2.43)}
-          rolling={5}
-          duration={1.5}
-          height={40}
-          width={22}
-        />
-        <span className={"text-lg"}>km/h</span>
-      </h3>
+      <CardValue value={getKilometersPerHour(2.43)} unit={'km/h'}/>
       <div className={"flex gap-2 items-center"}>
         <motion.div
           initial={{ rotate: 0 }}

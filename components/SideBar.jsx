@@ -23,7 +23,7 @@ const SideBar = ({ className = "" }) => {
       <PopUpContainer>
         <UserLocation />
       </PopUpContainer>
-      <PopUpContainer
+      <div
         className={`flex flex-col ${styles.gaps} border-[1px] ${styles.borderColor} p-4 rounded-xl`}
       >
         <div
@@ -41,7 +41,6 @@ const SideBar = ({ className = "" }) => {
                 width={32}
                 height={56}
                 duration={2}
-                delay={0.1}
               />
               <span>°C</span>
             </div>
@@ -66,7 +65,7 @@ const SideBar = ({ className = "" }) => {
             />
           )}
         />
-      </PopUpContainer>
+      </div>
 
       <CityPreview cityName={"New york"} />
     </div>

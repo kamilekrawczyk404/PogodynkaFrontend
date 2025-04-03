@@ -54,7 +54,7 @@ const AnimatedArrow = ({ direction = "bt" }) => {
         }`}
         initial={{ translateY: translations.first.initial, translateX: "-50%" }}
         animate={{ translateY: translations.first.animate }}
-        transition={{ type: "spring", delay: 0.25, duration: 2 }}
+        transition={{ type: "spring", delay: 0.25, duration: 1.5 }}
       >
         <Icons.Arrow className={"text-white"} />
       </motion.span>
@@ -67,7 +67,7 @@ const AnimatedArrow = ({ direction = "bt" }) => {
           translateX: "-50%",
         }}
         animate={{ translateY: translations.second.animate }}
-        transition={{ type: "spring", delay: 1, duration: 1.5 }}
+        transition={{ type: "spring", delay: 1, duration: 1 }}
       >
         <Icons.Arrow className={"text-white"} />
       </motion.span>

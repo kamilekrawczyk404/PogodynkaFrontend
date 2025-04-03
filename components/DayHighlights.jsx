@@ -5,6 +5,10 @@ import { styles } from "@/styles";
 import WindStatus from "@/components/MainCards/WindStatus";
 import { useSelector } from "react-redux";
 import SunriseSunset from "@/components/MainCards/SunriseSunset";
+import HumidityLevel from "@/components/MainCards/HumidityLevel";
+import VisibilityDistance from "@/components/MainCards/VisibilityDistance";
+import Precipitation from "@/components/MainCards/Precipitation";
+import Pressure from "@/components/MainCards/Pressure";
 
 const DayHighlights = ({ className = "" }) => {
   const { weather } = useSelector((state) => state.weather);
@@ -18,7 +22,14 @@ const DayHighlights = ({ className = "" }) => {
   //   { title: "Air Pressure" },
   // ];
 
-  const highlights = [WindStatus, SunriseSunset];
+  const highlights = [
+    WindStatus,
+    SunriseSunset,
+    HumidityLevel,
+    VisibilityDistance,
+    Precipitation,
+    Pressure,
+  ];
 
   return (
     <div className={`flex flex-col ${styles.gaps} ${className}`}>

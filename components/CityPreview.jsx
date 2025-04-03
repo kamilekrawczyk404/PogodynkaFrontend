@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import OverlayContainer from "@/components/OverlayContainer";
 import { styles } from "@/styles";
@@ -13,10 +12,7 @@ const CityPreview = ({ image, cityName }) => {
   }, [image, cityName]);
 
   return (
-    <motion.div
-      initial={{ scale: 0.9, opacity: 0.1 }}
-      whileInView={{ scale: 1, opacity: 1 }}
-      transition={{ type: "spring", duration: 0.7 }}
+    <div
       className={`relative flex-1 max-h-[12rem] mt-auto text-center rounded-xl overflow-hidden border-[1px] ${styles.borderColor} hover:${styles.borderColorFocus} transition-colors group`}
     >
       <Image
@@ -35,7 +31,7 @@ const CityPreview = ({ image, cityName }) => {
       >
         {cityName}
       </OverlayContainer>
-    </motion.div>
+    </div>
   );
 };
 
