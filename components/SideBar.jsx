@@ -7,6 +7,7 @@ import StaggerList from "@/components/StaggerList";
 import CityPreview from "@/components/CityPreview";
 import PopUpContainer from "@/components/PopUpContainer";
 import WeatherSecondaryFeature from "@/components/WeatherSecondaryFeature";
+import RolledNumber from "@/components/RolledNumber";
 
 const SideBar = ({ className = "" }) => {
   const sideBarWeatherInfo = [
@@ -33,7 +34,17 @@ const SideBar = ({ className = "" }) => {
           <div
             className={`flex flex-col gap-2 border-[1px] rounded-xl ${styles.borderColor} ${styles.paddings}`}
           >
-            <span className={"text-6xl"}>12°C</span>
+            <div className={"text-6xl flex gap-1"}>
+              <RolledNumber
+                number={12}
+                rolling={10}
+                width={32}
+                height={56}
+                duration={2}
+                delay={0.1}
+              />
+              <span>°C</span>
+            </div>
             <span>
               <span className={"font-semibold"}>Monday</span>,{" "}
               <span className={"text-neutral-400"}>16:00</span>

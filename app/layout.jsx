@@ -23,6 +23,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
+        suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable}  ${styles.bodyBgColor} ${styles.textDefault} antialiased lg:h-screen lg:overflow-y-hidden relative`}
       >
         <Navigation />

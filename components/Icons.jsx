@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faArrowUp,
   faEye,
   faLocationArrow,
   faLocationCrosshairs,
@@ -9,30 +10,21 @@ import {
 
 export const Icons = {
   WindDirection: ({ className = "" }) => (
-    <FontAwesomeIcon
-      className={`text-neutral-300 ${className}`}
-      icon={faLocationArrow}
-    />
+    <FontAwesomeIcon className={`${className}`} icon={faLocationArrow} />
   ),
   MagnifyingGlass: ({ className = "" }) => (
-    <FontAwesomeIcon
-      className={`text-neutral-300 ${className}`}
-      icon={faMagnifyingGlass}
-    />
+    <FontAwesomeIcon className={`${className}`} icon={faMagnifyingGlass} />
   ),
   Close: ({ className = "" }) => (
-    <FontAwesomeIcon
-      className={`text-neutral-300 ${className}`}
-      icon={faXmark}
-    />
+    <FontAwesomeIcon className={`${className}`} icon={faXmark} />
   ),
   Location: ({ className = "" }) => (
-    <FontAwesomeIcon
-      className={`text-neutral-300 ${className}`}
-      icon={faLocationCrosshairs}
-    />
+    <FontAwesomeIcon className={`${className}`} icon={faLocationCrosshairs} />
   ),
   Eye: ({ className = "" }) => (
-    <FontAwesomeIcon className={`text-neutral-300 ${className}`} icon={faEye} />
+    <FontAwesomeIcon className={`${className}`} icon={faEye} />
+  ),
+  Arrow: ({ className = "" }) => (
+    <FontAwesomeIcon className={`${className}`} icon={faArrowUp} />
   ),
 };

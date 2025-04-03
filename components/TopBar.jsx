@@ -10,6 +10,7 @@ const TopBar = ({ className = "" }) => {
   const { selectedDay } = useSelector((state) => state.weather);
 
   const days = [{}, {}, {}, {}, {}];
+
   return (
     <div className={`flex flex-col ${styles.gaps} ${className}`}>
       <h2 className={"text-2xl h-[34px]"}>Forecast for the next 5 days</h2>
