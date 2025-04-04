@@ -8,8 +8,20 @@ import CityPreview from "@/components/CityPreview";
 import PopUpContainer from "@/components/PopUpContainer";
 import WeatherSecondaryFeature from "@/components/WeatherSecondaryFeature";
 import RolledNumber from "@/components/RolledNumber";
+import { useSelector } from "react-redux";
 
+const getTemperature = (selectedDay, lists) => {
+  // if it's selected current day, return the first record located in the list
+  // otherwise, find the max temperature during the day
+
+  if (selectedDay === 0) {
+    return lists[0];
+  }
+};
 const SideBar = ({ className = "" }) => {
+  const { weather, days, daysAverage } = useSelector((state) => state.weather);
+
+  console.log(days);
   const sideBarWeatherInfo = [
     {
       image: { src: "/weather/04d.svg", alt: "Cloudiness" },
@@ -54,17 +66,17 @@ const SideBar = ({ className = "" }) => {
           </div>
         </div>
 
-        <StaggerList
-          className={"flex flex-col gap-2"}
-          items={sideBarWeatherInfo}
-          delay={0.5}
-          render={(item) => (
-            <WeatherSecondaryFeature
-              icon={<Image {...item.image} fill />}
-              content={item.value}
-            />
-          )}
-        />
+        {/*<StaggerList*/}
+        {/*  className={"flex flex-col gap-2"}*/}
+        {/*  items={sideBarWeatherInfo}*/}
+        {/*  delay={0.5}*/}
+        {/*  render={(item) => (*/}
+        {/*    <WeatherSecondaryFeature*/}
+        {/*      icon={<Image {...item.image} fill />}*/}
+        {/*      content={item.value}*/}
+        {/*    />*/}
+        {/*  )}*/}
+        {/*/>*/}
       </div>
 
       <CityPreview cityName={"New york"} />

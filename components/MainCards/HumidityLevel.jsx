@@ -1,9 +1,7 @@
 "use client";
 import React from "react";
-import { useSelector } from "react-redux";
 import WeatherMainFeature from "@/components/WeatherMainFeature";
 import BarChart from "@/components/BarChart";
-import RolledNumber from "@/components/RolledNumber";
 import CardValue from "@/components/MainCards/CardValue";
 
 const getHumidityFeedback = (humidityLevel) => {
