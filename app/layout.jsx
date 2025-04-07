@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable}  ${styles.bodyBgColor} ${styles.textDefault} antialiased lg:h-screen lg:overflow-y-hidden relative`}
       >
         <Navigation />
-        {children}
+        <div className={"relative lg:h-[calc(100vh-6.5rem)]"}>{children}</div>
       </body>
     </html>
   );

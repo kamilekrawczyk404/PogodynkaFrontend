@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import WeatherMainFeature from "@/components/WeatherMainFeature";
 import CardValue from "@/components/MainCards/CardValue";
+import { AnimatePresence, motion } from "framer-motion";
+import AnimatedText from "@/components/AnimatedText";
 
 const getVisibilityFeedback = (visibilityMeters) => {
   if (typeof visibilityMeters !== "number" || isNaN(visibilityMeters)) {
@@ -35,7 +37,8 @@ const VisibilityDistance = () => {
         value={Math.round(Math.round(visibility * 100) / 1000) / 100}
         unit={"km"}
       />
-      <p>{getVisibilityFeedback(visibility)}</p>
+
+      <AnimatedText text={getVisibilityFeedback(visibility)} />
     </WeatherMainFeature>
   );
 };

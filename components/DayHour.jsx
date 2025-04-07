@@ -7,8 +7,6 @@ const DayHour = ({ hour }) => {
   const dispatch = useDispatch();
   const { selectedHourData } = useSelector((state) => state.weather);
 
-  console.log(selectedHourData);
-
   return (
     <Card
       className={"px-3 py-1"}

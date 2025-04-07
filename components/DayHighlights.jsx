@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { styles } from "@/styles";
 import WindStatus from "@/components/MainCards/WindStatus";
 import SunriseSunset from "@/components/MainCards/SunriseSunset";
 import HumidityLevel from "@/components/MainCards/HumidityLevel";
@@ -13,20 +12,16 @@ const DayHighlights = ({ className = "" }) => {
   const { loading, weatherData } = useSelector((state) => state.weather);
 
   return (
-    <div className={`flex flex-col ${styles.gaps} ${className}`}>
-      {!loading && weatherData !== null && (
-        <>
-          <h2 className={"text-2xl"}>Today's Highlights</h2>
-          <div className={`h-full grid grid-cols-3 grid-rows-2 gap-2`}>
-            <WindStatus />
-            <SunriseSunset />
-            <HumidityLevel />
-            <VisibilityDistance />
-            <Precipitation />
-            <Pressure />
-          </div>
-        </>
-      )}
+    <div className={`flex flex-col gap-2 ${className}`}>
+      <h2 className={"text-2xl"}>Today's Highlights</h2>
+      <div className={`h-full grid grid-cols-3 grid-rows-2 gap-2`}>
+        <WindStatus />
+        <SunriseSunset />
+        <HumidityLevel />
+        <VisibilityDistance />
+        <Precipitation />
+        <Pressure />
+      </div>
     </div>
   );
 };

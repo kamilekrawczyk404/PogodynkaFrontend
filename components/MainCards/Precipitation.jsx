@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import WeatherMainFeature from "@/components/WeatherMainFeature";
 import CardValue from "@/components/MainCards/CardValue";
 import { useSelector } from "react-redux";
+import AnimatedText from "@/components/AnimatedText";
 
 const getPrecipitationFeedback = (precipitationPercent) => {
   if (
@@ -34,7 +35,7 @@ const Precipitation = () => {
   return (
     <WeatherMainFeature title={"Precipitation"}>
       <CardValue value={precipitation} unit={"%"} />
-      <p>{getPrecipitationFeedback(precipitation)}</p>
+      <AnimatedText text={getPrecipitationFeedback(precipitation)} />
     </WeatherMainFeature>
   );
 };

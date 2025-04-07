@@ -8,8 +8,12 @@ import { fetchWeatherData } from "@/redux/weatherSlice";
 const UserLocation = () => {
   const dispatch = useDispatch();
 
-  const onLocationSubmit = async (search) => {
-    dispatch(fetchWeatherData(search));
+  const onLocationSubmit = async (city) => {
+    await fetch(
+      `http://localhost:3000/api/geo?city=${encodeURIComponent(city)}`,
+    )
+      .then((response) => response.json())
+      .then((coords) => dispatch(fetchWeatherData(coords)));
   };
 
   const onGetGeolocation = async (geolocation) => {

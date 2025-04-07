@@ -4,9 +4,7 @@ import WeatherForecast from "@/components/WeatherForecast";
 
 export default function ForecastPage() {
   return (
-    <OuterContainer
-      className={`lg:h-[calc(100vh-8rem)] ${styles.verticalPadding}`}
-    >
+    <OuterContainer className={`h-full ${styles.verticalPadding}`}>
       <WeatherForecast />
     </OuterContainer>
   );

@@ -9,7 +9,7 @@ import OverlayContainer from "@/components/OverlayContainer";
 
 export default function Auth() {
   return (
-    <OuterContainer className={"lg:h-[calc(100vh-8rem)] h-fit"}>
+    <OuterContainer className={"h-full"}>
       <div
         className={`relative flex lg:flex-row flex-col-reverse justify-center h-full ${styles.gaps} ${styles.verticalPadding} ${styles.bgColor}`}
       >

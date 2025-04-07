@@ -6,6 +6,7 @@ import { styles } from "@/styles";
 import { Icons } from "@/components/Icons";
 import { motion } from "framer-motion";
 import CardValue from "@/components/MainCards/CardValue";
+import AnimatedText from "@/components/AnimatedText";
 
 const getWindDirection = (deg) => {
   const directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
@@ -30,7 +31,7 @@ const WindStatus = () => {
         <motion.div
           initial={{ rotate: 0 }}
           animate={{ rotate: windDeg - 45 }}
-          transition={{ type: "spring", delay: 0.25 }}
+          transition={{ type: "spring" }}
           className={`flex relative aspect-square w-8 rounded-full border-[1px] ${styles.borderColor}`}
         >
           <Icons.WindDirection
@@ -39,7 +40,7 @@ const WindStatus = () => {
             }
           />
         </motion.div>
-        <span>{getWindDirection(windDeg)}</span>
+        <AnimatedText text={getWindDirection(windDeg)} />
       </div>
     </WeatherMainFeature>
   );

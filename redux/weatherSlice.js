@@ -56,15 +56,15 @@ const splitByDays = (list) => {
       ...dailyData[day],
       [hour]: {
         icon: `${item.weather[0].icon}.svg`,
-        minTemp: Number(item.main["temp_min"].toFixed(1)),
-        mainTemp: Number(item.main.temp.toFixed(1)),
-        maxTemp: Number(item.main["temp_max"].toFixed(1)),
-        humidity: Number(item.main.humidity.toFixed(1)),
-        windSpeed: Number(item.wind.speed.toFixed(1)),
-        windDeg: Number(item.wind.deg.toFixed(1)),
-        visibility: Number(item.visibility.toFixed(1)),
-        pressure: Number(item.main.pressure.toFixed(1)),
-        precipitation: Number((snow + rain).toFixed(1)),
+        minTemp: item.main["temp_min"],
+        mainTemp: item.main.temp,
+        maxTemp: item.main["temp_max"],
+        humidity: item.main.humidity,
+        windSpeed: item.wind.speed,
+        windDeg: item.wind.deg,
+        visibility: item.visibility,
+        pressure: item.main.pressure,
+        precipitation: snow + rain,
       },
     };
   });
@@ -74,14 +74,20 @@ const splitByDays = (list) => {
 
 export const fetchWeatherData = createAsyncThunk(
   "weather/fetchWeatherData",
-  async (city, { rejectWithValue }) => {
+  async ({ lat, lon }, { rejectWithValue }) => {
     try {
+      const params = new URLSearchParams({
+        lat,
+        lon,
+      });
       const response = await fetch(
-        `http://localhost:3000/api/geo?city=${encodeURIComponent(city)}`,
+        `http://localhost:3000/api/weather?${params.toString()}`,
       );
-      // if (!response.ok) {
-      //   throw new Error('Nie udało się pobrać danych pogodowych');
-      // }
+
+      if (!response.ok) {
+        throw new Error("Nie udało się pobrać danych pogodowych");
+      }
+
       const data = await response.json();
       return data;
     } catch (error) {

@@ -30,43 +30,37 @@ const TopBar = ({ className = "" }) => {
 
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
-      {!loading && weatherData !== null && (
-        <>
-          <div className={"flex justify-between items-center"}>
-            <h2 className={"text-2xl"}>Forecast for the next 5 days</h2>
-            <LinedButtons
-              items={temperatureUnits}
-              render={(item) => (
-                <ActiveIndicator
-                  key={item.name}
-                  active={item.name.substring(0, 1) === temperatureUnit}
-                  onClick={() => dispatch(changeTemperatureUnit())}
-                  layoutId={"temperatureUnit"}
-                >
-                  {item.name}
-                </ActiveIndicator>
-              )}
-            />
-          </div>
-          <div className={`flex w-full justify-between gap-2`}>
-            {Object.entries(daysMinMaxTemp).map(([day, values], index) => (
-              <DayForecast
-                active={selectedDayData.date === day}
-                key={index}
-                day={{ date: day, ...values }}
-                onClick={() => dispatch(setSelectedDayData(day))}
-              />
-            ))}
-          </div>
-          <div className={"flex gap-1 items-center"}>
-            {Object.entries(days[selectedDayData.date]).map(
-              ([hour, _], index) => (
-                <DayHour key={index} hour={hour} />
-              ),
-            )}
-          </div>
-        </>
-      )}
+      <div className={"flex justify-between items-center"}>
+        <h2 className={"text-2xl"}>Forecast for the next 5 days</h2>
+        <LinedButtons
+          items={temperatureUnits}
+          render={(item) => (
+            <ActiveIndicator
+              key={item.name}
+              active={item.name.substring(0, 1) === temperatureUnit}
+              onClick={() => dispatch(changeTemperatureUnit())}
+              layoutId={"temperatureUnit"}
+            >
+              {item.name}
+            </ActiveIndicator>
+          )}
+        />
+      </div>
+      <div className={`flex w-full justify-between gap-2`}>
+        {Object.entries(daysMinMaxTemp).map(([day, values], index) => (
+          <DayForecast
+            active={selectedDayData.date === day}
+            key={index}
+            day={{ date: day, ...values }}
+            onClick={() => dispatch(setSelectedDayData(day))}
+          />
+        ))}
+      </div>
+      <div className={"flex gap-1 items-center"}>
+        {Object.entries(days[selectedDayData.date]).map(([hour, _], index) => (
+          <DayHour key={index} hour={hour} />
+        ))}
+      </div>
     </div>
   );
 };

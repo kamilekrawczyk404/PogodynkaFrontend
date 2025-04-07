@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import WeatherMainFeature from "@/components/WeatherMainFeature";
 import CardValue from "@/components/MainCards/CardValue";
 import { useSelector } from "react-redux";
+import AnimatedText from "@/components/AnimatedText";
 
 const getPressureFeedback = (pressureHPa) => {
   if (typeof pressureHPa !== "number" || isNaN(pressureHPa)) {
@@ -27,7 +28,7 @@ const Pressure = ({}) => {
   return (
     <WeatherMainFeature title={"Pressure"}>
       <CardValue value={pressure} unit={"hPa"} />
-      <p>{getPressureFeedback(pressure)}</p>
+      <AnimatedText text={getPressureFeedback(pressure)} />
     </WeatherMainFeature>
   );
 };
