@@ -11,89 +11,140 @@ import RolledNumber from "@/components/RolledNumber";
 import { useSelector } from "react-redux";
 import { celsiusToFahrenheit } from "@/redux/weatherSlice";
 
-const getTemperature = (selectedDay, lists) => {
-  // if it's selected current day, return the first record located in the list
-  // otherwise, find the max temperature during the day
-
-  if (selectedDay === 0) {
-    return lists[0];
-  }
-};
 const SideBar = ({ className = "" }) => {
-  const { days, daysAverage, selectedDay, selectedHour, temperatureUnit } =
-    useSelector((state) => state.weather);
+  const {
+    days,
+    selectedDayData,
+    selectedHourData,
+    temperatureUnit,
+    city,
+    weatherData,
+    loading,
+    error,
+  } = useSelector((state) => state.weather);
 
   const [temperature, setTemperature] = useState(0);
 
-  const unit = temperatureUnit === "fahrenheit" ? "F" : "C";
+  // useEffect(() => {
+  //   setTemperature(
+  //     temperatureUnit === "F"
+  //       ? celsiusToFahrenheit(selectedHourData.mainTemp)
+  //       : selectedHourData.mainTemp,
+  //   );
+  // }, [selectedHourData, selectedDayData, temperatureUnit]);
 
-  useEffect(() => {
-    setTemperature(
-      selectedHour === "all"
-        ? temperatureUnit === "fahrenheit"
-          ? celsiusToFahrenheit(daysAverage[selectedDay].maxTemp)
-          : daysAverage[selectedDay].maxTemp
-        : temperatureUnit === "fahrenheit"
-          ? celsiusToFahrenheit(days[selectedDay][selectedHour].mainTemp)
-          : days[selectedDay][selectedHour].mainTemp,
-    );
-  }, [selectedHour, selectedDay, temperatureUnit]);
+  // Funkcja pomocnicza, która wyciąga dane tylko jeśli są dostępne
+  const getWeatherInfo = () => {
+    if (!weatherData || !weatherData.list || !weatherData.list.length) {
+      return null;
+    }
+
+    const temp = Math.round(weatherData.list[0].main.temp - 273.15);
+    const currTime = new Date(weatherData.list[0].dt * 1000);
+
+    const dayOfWeek = currTime.toLocaleDateString("en-US", { weekday: "long" });
+    const now = new Date();
+    const formattedTime = now.toLocaleTimeString("pl-PL", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false, // 24-godzinny format
+    });
+
+    const weatherIcon = weatherData.list[0].weather[0].icon;
+    const weatherDescription = weatherData.list[0].weather[0].main;
+    const humidity = weatherData.list[0].main.humidity;
+
+    const sideBarWeatherInfo = [
+      {
+        image: { src: `/weather/${weatherIcon}.svg`, alt: "Weather Condition" },
+        value: weatherDescription,
+      },
+      {
+        image: { src: "/weather/humidity.svg", alt: "Humidity" },
+        value: `${humidity}%`,
+      },
+    ];
+
+    return {
+      cityName: weatherData.city.name,
+      temp,
+      dayOfWeek,
+      formattedTime,
+      weatherIcon,
+      sideBarWeatherInfo,
+    };
+  };
+
+  const weatherInfo = getWeatherInfo();
+
+  // console.log(temperature);
 
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
       <PopUpContainer>
         <UserLocation />
       </PopUpContainer>
-      <div
-        className={`flex flex-col ${styles.gaps} border-[1px] ${styles.borderColor} p-4 rounded-xl`}
-      >
-        <div
-          className={
-            "relative flex items-center justify-between gap-2 w-full rounded-xl"
-          }
-        >
+      {weatherData !== null && !loading && (
+        <>
           <div
-            className={`flex flex-col gap-2 border-[1px] rounded-xl ${styles.borderColor} ${styles.paddings}`}
+            className={`flex flex-col ${styles.gaps} border-[1px] ${styles.borderColor} p-4 rounded-xl`}
           >
-            <div className={"text-6xl flex gap-1"}>
-              <RolledNumber
-                number={Math.round(temperature)}
-                rolling={10}
-                width={34}
-                height={56}
-                duration={2}
-              />
-              <span>°{unit}</span>
+            <div
+              className={
+                "relative flex items-center justify-between gap-2 w-full rounded-xl"
+              }
+            >
+              <div
+                className={`flex flex-col gap-2 border-[1px] rounded-xl ${styles.borderColor} ${styles.paddings}`}
+              >
+                <div className={"text-6xl flex gap-1"}>
+                  <RolledNumber
+                    number={selectedHourData.mainTemp}
+                    rolling={10}
+                    width={34}
+                    height={56}
+                    duration={2}
+                  />
+                  <span>°{temperatureUnit}</span>
+                </div>
+                <span>
+                  <span className={"font-semibold"}>
+                    {selectedDayData.date.substring(
+                      0,
+                      selectedDayData.date.indexOf(" "),
+                    )}
+                  </span>
+
+                  <span className={"text-neutral-400"}>
+                    {`, ${selectedHourData.hour}`}
+                  </span>
+                </span>
+              </div>
+              <div className={"relative min-h-[8rem] aspect-square mx-auto"}>
+                <Image
+                  src={`/weather/${selectedHourData.icon}`}
+                  alt={"Weather icon"}
+                  fill
+                />
+              </div>
             </div>
-            <span>
-              <span className={"font-semibold"}>
-                {selectedDay.substring(0, selectedDay.indexOf(" "))}
-              </span>
 
-              <span className={"text-neutral-400"}>
-                {selectedHour !== "all" && `, ${selectedHour}`}
-              </span>
-            </span>
+            {/*<StaggerList*/}
+            {/*  className={"flex flex-col gap-2"}*/}
+            {/*  items={sideBarWeatherInfo}*/}
+            {/*  delay={0.5}*/}
+            {/*  render={(item) => (*/}
+            {/*    <WeatherSecondaryFeature*/}
+            {/*      icon={<Image {...item.image} fill />}*/}
+            {/*      content={item.value}*/}
+            {/*    />*/}
+            {/*  )}*/}
+            {/*/>*/}
           </div>
-          <div className={"relative min-h-[8rem] aspect-square mx-auto"}>
-            <Image src={"/weather/01d.svg"} alt={"Weather icon"} fill />
-          </div>
-        </div>
 
-        {/*<StaggerList*/}
-        {/*  className={"flex flex-col gap-2"}*/}
-        {/*  items={sideBarWeatherInfo}*/}
-        {/*  delay={0.5}*/}
-        {/*  render={(item) => (*/}
-        {/*    <WeatherSecondaryFeature*/}
-        {/*      icon={<Image {...item.image} fill />}*/}
-        {/*      content={item.value}*/}
-        {/*    />*/}
-        {/*  )}*/}
-        {/*/>*/}
-      </div>
-
-      <CityPreview cityName={"New york"} />
+          <CityPreview cityName={city} />
+        </>
+      )}
     </div>
   );
 };

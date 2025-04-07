@@ -27,20 +27,10 @@ const getPrecipitationFeedback = (precipitationPercent) => {
 };
 
 const Precipitation = () => {
-  const custom = 34;
-  const { selectedDay, selectedHour, days, daysAverage } = useSelector(
-    (state) => state.weather,
-  );
+  const {
+    selectedHourData: { precipitation },
+  } = useSelector((state) => state.weather);
 
-  const [precipitation, setPrecipitation] = useState(0);
-
-  useEffect(() => {
-    setPrecipitation(
-      selectedHour === "all"
-        ? daysAverage[selectedDay].precipitation
-        : days[selectedDay][selectedHour].precipitation,
-    );
-  }, [selectedDay, selectedHour]);
   return (
     <WeatherMainFeature title={"Precipitation"}>
       <CardValue value={precipitation} unit={"%"} />

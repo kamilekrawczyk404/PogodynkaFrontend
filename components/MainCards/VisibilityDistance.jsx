@@ -25,19 +25,9 @@ const getVisibilityFeedback = (visibilityMeters) => {
 };
 
 const VisibilityDistance = () => {
-  const { selectedDay, selectedHour, days, daysAverage } = useSelector(
-    (state) => state.weather,
-  );
-
-  const [visibility, setVisibility] = useState(0);
-
-  useEffect(() => {
-    setVisibility(
-      selectedHour === "all"
-        ? daysAverage[selectedDay].visibility
-        : days[selectedDay][selectedHour].visibility,
-    );
-  }, [selectedHour, selectedDay]);
+  const {
+    selectedHourData: { visibility },
+  } = useSelector((state) => state.weather);
 
   return (
     <WeatherMainFeature title={"Visibility"}>

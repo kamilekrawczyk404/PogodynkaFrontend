@@ -8,30 +8,28 @@ import { celsiusToFahrenheit } from "@/redux/weatherSlice";
 const DayForecast = ({ day, active, ...props }) => {
   const { temperatureUnit } = useSelector((state) => state.weather);
 
-  const unit = temperatureUnit === "fahrenheit" ? "F" : "C";
-
   return (
     <Card className={"w-full p-4"} active={active} {...props}>
       <span>{day.date.substring(0, 3)}</span>
       <div className={"relative min-h-[5rem] aspect-ratio"}>
-        <Image src={"/weather/02d.svg"} alt={"Weather icon"} fill />
+        <Image src={`/weather/${day.maxTemp.icon}`} alt={"Weather icon"} fill />
       </div>
       <div className={"flex gap-2 text-sm"}>
         <span>
           {Math.round(
-            temperatureUnit !== "fahrenheit"
-              ? day.maxTemp
-              : celsiusToFahrenheit(day.maxTemp),
+            temperatureUnit !== "F"
+              ? day.maxTemp.value
+              : celsiusToFahrenheit(day.maxTemp.value),
           )}
-          °{unit}
+          °{temperatureUnit}
         </span>
         <span className={"text-neutral-400"}>
           {Math.round(
-            temperatureUnit !== "fahrenheit"
-              ? day.minTemp
-              : celsiusToFahrenheit(day.minTemp),
+            temperatureUnit !== "F"
+              ? day.minTemp.value
+              : celsiusToFahrenheit(day.minTemp.value),
           )}
-          °{unit}
+          °{temperatureUnit}
         </span>
       </div>
     </Card>

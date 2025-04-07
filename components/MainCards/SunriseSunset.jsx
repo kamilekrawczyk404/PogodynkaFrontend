@@ -5,18 +5,23 @@ import WeatherMainFeature from "@/components/WeatherMainFeature";
 import { Icons } from "@/components/Icons";
 import { motion } from "framer-motion";
 
-const formatDate = (time) => {
-  const date = new Date(time);
+const formatDate = (time, timezone) => {
+  const date = new Date((time + timezone) * 1000);
 
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
+  // Get the hours (24-hour format)
+  const hours = String(date.getUTCHours()).padStart(2, "0");
+
+  // Get the minutes
+  const minutes = String(date.getUTCMinutes()).padStart(2, "0");
+
+  // Return the formatted time string
   return `${hours}:${minutes}`;
 };
 
 const SunsetSunrise = () => {
   const {
-    weather: {
-      city: { sunrise, sunset },
+    weatherData: {
+      city: { sunrise, sunset, timezone },
     },
   } = useSelector((state) => state.weather);
 
@@ -24,11 +29,11 @@ const SunsetSunrise = () => {
     <WeatherMainFeature title={"Sunrire & Sunset"}>
       <div className={"flex gap-4 items-center"}>
         <SunIcon type={"sunrise"} />
-        <h3 className={"font-semibold"}>{formatDate(sunrise)}</h3>
+        <h3 className={"font-semibold"}>{formatDate(sunrise, timezone)}</h3>
       </div>
       <div className={"flex gap-4 items-center"}>
         <SunIcon type={"sunset"} />
-        <h3 className={"font-semibold"}>{formatDate(sunset)}</h3>
+        <h3 className={"font-semibold"}>{formatDate(sunset, timezone)}</h3>
       </div>
     </WeatherMainFeature>
   );

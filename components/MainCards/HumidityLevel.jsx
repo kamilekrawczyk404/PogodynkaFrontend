@@ -22,32 +22,19 @@ const getHumidityFeedback = (humidityLevel) => {
 };
 
 const HumidityLevel = () => {
-  const { days, daysAverage, selectedHour, selectedDay } = useSelector(
-    (state) => state.weather,
-  );
-
-  const [humidityLevel, setHumidityLevel] = useState(0);
-
-  useEffect(() => {
-    setHumidityLevel(
-      selectedHour === "all"
-        ? daysAverage[selectedDay].humidity
-        : days[selectedDay][selectedHour].humidity,
-    );
-  }, [selectedHour, selectedDay]);
+  const {
+    selectedHourData: { humidity },
+  } = useSelector((state) => state.weather);
 
   return (
     <WeatherMainFeature title={"Humidity"}>
       <div className={"flex justify-between flex-1 items-center"}>
-        <CardValue value={humidityLevel} unit={"%"} />
-        <BarChart
-          min={0}
-          max={100}
-          value={humidityLevel}
-          bgColor={`bg-blue-600`}
-        />
+        <CardValue value={humidity} unit={"%"} />
       </div>
-      <p>{getHumidityFeedback(humidityLevel)}</p>
+      <p>{getHumidityFeedback(humidity)}</p>
+      <div className={"absolute right-4 top-4 w-fit h-[calc(100%-2rem)]"}>
+        <BarChart min={0} max={100} value={humidity} bgColor={`bg-blue-600`} />
+      </div>
     </WeatherMainFeature>
   );
 };

@@ -19,21 +19,10 @@ const getPressureFeedback = (pressureHPa) => {
   }
 };
 
-const Pressure = () => {
-  const custom = 1024;
-  const { selectedDay, selectedHour, days, daysAverage } = useSelector(
-    (state) => state.weather,
-  );
-
-  const [pressure, setPressure] = useState(0);
-
-  useEffect(() => {
-    setPressure(
-      selectedHour === "all"
-        ? daysAverage[selectedDay].pressure
-        : days[selectedDay][selectedHour].pressure,
-    );
-  }, [selectedHour, selectedDay]);
+const Pressure = ({}) => {
+  const {
+    selectedHourData: { pressure },
+  } = useSelector((state) => state.weather);
 
   return (
     <WeatherMainFeature title={"Pressure"}>

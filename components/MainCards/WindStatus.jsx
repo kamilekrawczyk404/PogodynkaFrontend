@@ -19,32 +19,17 @@ const getKilometersPerHour = (metersPerSeconds) => {
 };
 
 const WindStatus = () => {
-  const weather = useSelector((state) => state.weather);
-  const { selectedHour, selectedDay, days, daysAverage } = weather;
-
-  const [windProps, setWindProps] = useState({ speed: 0, deg: 0 });
-
-  useEffect(() => {
-    const data =
-      selectedHour === "all"
-        ? daysAverage[selectedDay]
-        : days[selectedDay][selectedHour];
-
-    setWindProps({
-      speed: data.windSpeed,
-      deg: data.windDeg,
-    });
-  }, [selectedHour, selectedDay]);
-
-  console.log(windProps);
+  const {
+    selectedHourData: { windSpeed, windDeg },
+  } = useSelector((state) => state.weather);
 
   return (
     <WeatherMainFeature title={"Wind Status"}>
-      <CardValue value={getKilometersPerHour(windProps.speed)} unit={"km/h"} />
+      <CardValue value={getKilometersPerHour(windSpeed)} unit={"km/h"} />
       <div className={"flex gap-2 items-center"}>
         <motion.div
           initial={{ rotate: 0 }}
-          animate={{ rotate: windProps.deg - 45 }}
+          animate={{ rotate: windDeg - 45 }}
           transition={{ type: "spring", delay: 0.25 }}
           className={`flex relative aspect-square w-8 rounded-full border-[1px] ${styles.borderColor}`}
         >
@@ -54,7 +39,7 @@ const WindStatus = () => {
             }
           />
         </motion.div>
-        <span>{getWindDirection(windProps.deg)}</span>
+        <span>{getWindDirection(windDeg)}</span>
       </div>
     </WeatherMainFeature>
   );

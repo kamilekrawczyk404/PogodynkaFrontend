@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 
 const RolledNumber = ({
@@ -42,27 +42,32 @@ const RolledNumber = ({
 const SingleRolledNumber = ({ number, duration, rolling, delay }) => {
   const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
   const controls = useAnimation();
-  const numbersStack = useRef([]);
+  const [numbersStack, setNumbersStack] = useState([]);
 
   useEffect(() => {
-    numbersStack.current = [
+    const newNumbersStack = [
       number.toString(),
       ...Array.from(Array(rolling).keys()).map(
         (_, index) => numbers[index % number.length],
       ),
     ];
+    setNumbersStack(newNumbersStack);
 
     controls.start({
-      top: [`-${numbersStack.current.length * 2}rem`, "0rem"],
+      top: [`-${newNumbersStack.length * 2}rem`, "0rem"],
       transition: { duration, type: "spring", delay },
     });
 
     return () => controls.stop();
-  }, [number]);
+  }, [number, duration, rolling, delay]);
 
   return (
-    <motion.div className={"absolute flex flex-col"} animate={controls}>
-      {numbersStack.current.map((item, index) => (
+    <motion.div
+      className={"absolute flex flex-col"}
+      animate={controls}
+      exit={{ opacity: 0 }}
+    >
+      {numbersStack.map((item, index) => (
         <span key={index}>{item}</span>
       ))}
     </motion.div>

@@ -2,14 +2,18 @@
 import React from "react";
 import SearchInput from "@/components/SearchInput";
 import CurrentGeolocation from "@/components/CurrentGeolocation";
+import { useDispatch } from "react-redux";
+import { fetchWeatherData } from "@/redux/weatherSlice";
 
 const UserLocation = () => {
+  const dispatch = useDispatch();
+
   const onLocationSubmit = async (search) => {
-    console.log(`user search - ${search}`);
+    dispatch(fetchWeatherData(search));
   };
 
   const onGetGeolocation = async (geolocation) => {
-    console.log(geolocation);
+    dispatch(fetchWeatherData(geolocation));
   };
 
   return (

@@ -11,8 +11,7 @@ const BarChart = ({ bgColor, min, max, value }) => {
       <motion.div
         initial={{ height: 0 }}
         animate={{ height: `${(value / (max - min)) * 100}%` }}
-        transition={{ type: "spring", delay: 0.7, duration: 0.5 }}
-        style={{ height: "20px" }}
+        transition={{ type: "spring", duration: 0.5 }}
         className={`absolute bottom-1 left-1/2 -translate-x-1/2  w-3 rounded-xl ${bgColor}`}
       ></motion.div>
     </div>
