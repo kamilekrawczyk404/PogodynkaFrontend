@@ -2,12 +2,13 @@ import React from "react";
 import { motion } from "framer-motion";
 import { styles } from "@/styles";
 
-const ActiveIndicator = ({ layoutId, active, children }) => {
+const ActiveIndicator = ({ layoutId, active, children, ...props }) => {
   return (
     <div
       className={`relative rounded-xl px-3 py-1 border-[1px] hover:cursor-pointer ${
         active ? `${styles.borderColorFocus}` : `${styles.borderColor}`
       }`}
+      {...props}
     >
       {children}
       {active && (

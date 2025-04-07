@@ -1,8 +1,9 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import WeatherMainFeature from "@/components/WeatherMainFeature";
 import BarChart from "@/components/BarChart";
 import CardValue from "@/components/MainCards/CardValue";
+import { useSelector } from "react-redux";
 
 const getHumidityFeedback = (humidityLevel) => {
   if (typeof humidityLevel !== "number" || isNaN(humidityLevel)) {
@@ -21,26 +22,32 @@ const getHumidityFeedback = (humidityLevel) => {
 };
 
 const HumidityLevel = () => {
-  const customLevel = 57;
-  // data from api under "value" property
-  // const {
-  //   weather: {
-  //     forecast: { value },
-  //   },
-  // } = useSelector((state) => state.weather);
+  const { days, daysAverage, selectedHour, selectedDay } = useSelector(
+    (state) => state.weather,
+  );
+
+  const [humidityLevel, setHumidityLevel] = useState(0);
+
+  useEffect(() => {
+    setHumidityLevel(
+      selectedHour === "all"
+        ? daysAverage[selectedDay].humidity
+        : days[selectedDay][selectedHour].humidity,
+    );
+  }, [selectedHour, selectedDay]);
 
   return (
     <WeatherMainFeature title={"Humidity"}>
       <div className={"flex justify-between flex-1 items-center"}>
-        <CardValue value={customLevel} unit={"%"} />
+        <CardValue value={humidityLevel} unit={"%"} />
         <BarChart
           min={0}
           max={100}
-          value={customLevel}
+          value={humidityLevel}
           bgColor={`bg-blue-600`}
         />
       </div>
-      <p>{getHumidityFeedback(customLevel)}</p>
+      <p>{getHumidityFeedback(humidityLevel)}</p>
     </WeatherMainFeature>
   );
 };

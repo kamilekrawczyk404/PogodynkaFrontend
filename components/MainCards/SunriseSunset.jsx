@@ -1,27 +1,34 @@
+"use client";
 import React from "react";
 import { useSelector } from "react-redux";
 import WeatherMainFeature from "@/components/WeatherMainFeature";
 import { Icons } from "@/components/Icons";
 import { motion } from "framer-motion";
 
+const formatDate = (time) => {
+  const date = new Date(time);
+
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  return `${hours}:${minutes}`;
+};
+
 const SunsetSunrise = () => {
-  const sunrise = "07:12 AM";
-  const sunset = "21:12 PM";
-  // const {
-  //   weather: {
-  //     city: { sunrise, sunset },
-  //   },
-  // } = useSelector((state) => state.weather);
+  const {
+    weather: {
+      city: { sunrise, sunset },
+    },
+  } = useSelector((state) => state.weather);
 
   return (
     <WeatherMainFeature title={"Sunrire & Sunset"}>
       <div className={"flex gap-4 items-center"}>
         <SunIcon type={"sunrise"} />
-        <h3 className={"font-semibold"}>{sunrise}</h3>
+        <h3 className={"font-semibold"}>{formatDate(sunrise)}</h3>
       </div>
       <div className={"flex gap-4 items-center"}>
         <SunIcon type={"sunset"} />
-        <h3 className={"font-semibold"}>{sunset}</h3>
+        <h3 className={"font-semibold"}>{formatDate(sunset)}</h3>
       </div>
     </WeatherMainFeature>
   );

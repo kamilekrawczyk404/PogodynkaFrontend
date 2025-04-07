@@ -45,7 +45,7 @@ const AuthenticationForms = ({ className = "" }) => {
       className={`w-full h-fit flex flex-col gap-3 rounded-2xl ${styles.paddings} ${styles.bodyBgColor} ${styles.textDefault} ${className}`}
     >
       <LinedButtons
-        className={"bg-neutral-800 w-fit"}
+        className={"w-fit"}
         items={forms}
         render={(button) => (
           <ActiveIndicator

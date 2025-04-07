@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import WeatherMainFeature from "@/components/WeatherMainFeature";
 import CardValue from "@/components/MainCards/CardValue";
@@ -25,21 +25,27 @@ const getVisibilityFeedback = (visibilityMeters) => {
 };
 
 const VisibilityDistance = () => {
-  const customValue = 5634;
-  // const {
-  //   weather: {
-  //     forecast: {
-  //       visibility: { value },
-  //     },
-  //   },
-  // } = useSelector((state) => state.weather);
+  const { selectedDay, selectedHour, days, daysAverage } = useSelector(
+    (state) => state.weather,
+  );
+
+  const [visibility, setVisibility] = useState(0);
+
+  useEffect(() => {
+    setVisibility(
+      selectedHour === "all"
+        ? daysAverage[selectedDay].visibility
+        : days[selectedDay][selectedHour].visibility,
+    );
+  }, [selectedHour, selectedDay]);
+
   return (
     <WeatherMainFeature title={"Visibility"}>
       <CardValue
-        value={Math.round(Math.round(customValue * 100) / 1000) / 100}
+        value={Math.round(Math.round(visibility * 100) / 1000) / 100}
         unit={"km"}
       />
-      <p>{getVisibilityFeedback(customValue)}</p>
+      <p>{getVisibilityFeedback(visibility)}</p>
     </WeatherMainFeature>
   );
 };

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import WeatherMainFeature from "@/components/WeatherMainFeature";
 import CardValue from "@/components/MainCards/CardValue";
+import { useSelector } from "react-redux";
 
 const getPressureFeedback = (pressureHPa) => {
   if (typeof pressureHPa !== "number" || isNaN(pressureHPa)) {
@@ -20,10 +21,24 @@ const getPressureFeedback = (pressureHPa) => {
 
 const Pressure = () => {
   const custom = 1024;
+  const { selectedDay, selectedHour, days, daysAverage } = useSelector(
+    (state) => state.weather,
+  );
+
+  const [pressure, setPressure] = useState(0);
+
+  useEffect(() => {
+    setPressure(
+      selectedHour === "all"
+        ? daysAverage[selectedDay].pressure
+        : days[selectedDay][selectedHour].pressure,
+    );
+  }, [selectedHour, selectedDay]);
+
   return (
     <WeatherMainFeature title={"Pressure"}>
-      <CardValue value={custom} unit={"hPa"} />
-      <p>{getPressureFeedback(custom)}</p>
+      <CardValue value={pressure} unit={"hPa"} />
+      <p>{getPressureFeedback(pressure)}</p>
     </WeatherMainFeature>
   );
 };

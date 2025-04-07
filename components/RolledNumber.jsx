@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useRef } from "react";
+import { motion, useAnimation } from "framer-motion";
 
 const RolledNumber = ({
   number,
@@ -13,7 +13,7 @@ const RolledNumber = ({
   return (
     <>
       <div
-        className={`relative flex overflow-y-hidden ${className}`}
+        className={`relative flex overflow-hidden ${className}`}
         style={{ height }}
       >
         {number
@@ -41,21 +41,28 @@ const RolledNumber = ({
 
 const SingleRolledNumber = ({ number, duration, rolling, delay }) => {
   const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+  const controls = useAnimation();
+  const numbersStack = useRef([]);
 
-  const numbersStack = [
-    number.toString(),
-    ...Array.from(Array(rolling).keys()).map(
-      (_, index) => numbers[index % number.length],
-    ),
-  ];
+  useEffect(() => {
+    numbersStack.current = [
+      number.toString(),
+      ...Array.from(Array(rolling).keys()).map(
+        (_, index) => numbers[index % number.length],
+      ),
+    ];
+
+    controls.start({
+      top: [`-${numbersStack.current.length * 2}rem`, "0rem"],
+      transition: { duration, type: "spring", delay },
+    });
+
+    return () => controls.stop();
+  }, [number]);
 
   return (
-    <motion.div
-      className={"absolute flex flex-col"}
-      animate={{ top: [`-${numbersStack.length * 2}rem`, "0rem"] }}
-      transition={{ duration, type: "spring", delay }}
-    >
-      {numbersStack.map((item, index) => (
+    <motion.div className={"absolute flex flex-col"} animate={controls}>
+      {numbersStack.current.map((item, index) => (
         <span key={index}>{item}</span>
       ))}
     </motion.div>

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import WeatherMainFeature from "@/components/WeatherMainFeature";
 import CardValue from "@/components/MainCards/CardValue";
+import { useSelector } from "react-redux";
 
 const getPrecipitationFeedback = (precipitationPercent) => {
   if (
@@ -27,10 +28,23 @@ const getPrecipitationFeedback = (precipitationPercent) => {
 
 const Precipitation = () => {
   const custom = 34;
+  const { selectedDay, selectedHour, days, daysAverage } = useSelector(
+    (state) => state.weather,
+  );
+
+  const [precipitation, setPrecipitation] = useState(0);
+
+  useEffect(() => {
+    setPrecipitation(
+      selectedHour === "all"
+        ? daysAverage[selectedDay].precipitation
+        : days[selectedDay][selectedHour].precipitation,
+    );
+  }, [selectedDay, selectedHour]);
   return (
     <WeatherMainFeature title={"Precipitation"}>
-      <CardValue value={custom} unit={"%"} />
-      <p>{getPrecipitationFeedback(custom)}</p>
+      <CardValue value={precipitation} unit={"%"} />
+      <p>{getPrecipitationFeedback(precipitation)}</p>
     </WeatherMainFeature>
   );
 };

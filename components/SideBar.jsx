@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import UserLocation from "@/components/UserLocation";
 import { styles } from "@/styles";
 import Image from "next/image";
@@ -9,6 +9,7 @@ import PopUpContainer from "@/components/PopUpContainer";
 import WeatherSecondaryFeature from "@/components/WeatherSecondaryFeature";
 import RolledNumber from "@/components/RolledNumber";
 import { useSelector } from "react-redux";
+import { celsiusToFahrenheit } from "@/redux/weatherSlice";
 
 const getTemperature = (selectedDay, lists) => {
   // if it's selected current day, return the first record located in the list
@@ -19,19 +20,27 @@ const getTemperature = (selectedDay, lists) => {
   }
 };
 const SideBar = ({ className = "" }) => {
-  const { weather, days, daysAverage } = useSelector((state) => state.weather);
+  const { days, daysAverage, selectedDay, selectedHour, temperatureUnit } =
+    useSelector((state) => state.weather);
 
-  console.log(days);
-  const sideBarWeatherInfo = [
-    {
-      image: { src: "/weather/04d.svg", alt: "Cloudiness" },
-      value: "Mostly Cloud",
-    },
-    { image: { src: "/weather/humidity.svg", alt: "Humidity" }, value: "30%" },
-  ];
+  const [temperature, setTemperature] = useState(0);
+
+  const unit = temperatureUnit === "fahrenheit" ? "F" : "C";
+
+  useEffect(() => {
+    setTemperature(
+      selectedHour === "all"
+        ? temperatureUnit === "fahrenheit"
+          ? celsiusToFahrenheit(daysAverage[selectedDay].maxTemp)
+          : daysAverage[selectedDay].maxTemp
+        : temperatureUnit === "fahrenheit"
+          ? celsiusToFahrenheit(days[selectedDay][selectedHour].mainTemp)
+          : days[selectedDay][selectedHour].mainTemp,
+    );
+  }, [selectedHour, selectedDay, temperatureUnit]);
 
   return (
-    <div className={`flex flex-col ${styles.gaps} ${className}`}>
+    <div className={`flex flex-col gap-2 ${className}`}>
       <PopUpContainer>
         <UserLocation />
       </PopUpContainer>
@@ -48,17 +57,22 @@ const SideBar = ({ className = "" }) => {
           >
             <div className={"text-6xl flex gap-1"}>
               <RolledNumber
-                number={12}
+                number={Math.round(temperature)}
                 rolling={10}
-                width={32}
+                width={34}
                 height={56}
                 duration={2}
               />
-              <span>°C</span>
+              <span>°{unit}</span>
             </div>
             <span>
-              <span className={"font-semibold"}>Monday</span>,{" "}
-              <span className={"text-neutral-400"}>16:00</span>
+              <span className={"font-semibold"}>
+                {selectedDay.substring(0, selectedDay.indexOf(" "))}
+              </span>
+
+              <span className={"text-neutral-400"}>
+                {selectedHour !== "all" && `, ${selectedHour}`}
+              </span>
             </span>
           </div>
           <div className={"relative min-h-[8rem] aspect-square mx-auto"}>

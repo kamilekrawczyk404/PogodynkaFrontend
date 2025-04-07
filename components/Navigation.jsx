@@ -28,13 +28,13 @@ const Navigation = () => {
         </Link>
       </div>
       <LinedButtons
-        className={`${styles.bodyBgColor} sm:mx-auto`}
+        className={`sm:mx-auto`}
         items={pathLinks}
         render={(link) => (
           <ActiveIndicator
             key={link.name}
             layoutId={"navigationActiveLink"}
-            active={pathname.startsWith(link.pathname)}
+            active={pathname === link.pathname}
           >
             <Link className={`${styles.textDefault}`} href={link.pathname}>
               {link.name}

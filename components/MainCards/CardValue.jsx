@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import RolledNumber from "@/components/RolledNumber";
 
 const CardValue = ({ value, unit = "" }) => {
+  useEffect(() => {});
   return (
     <h3 className={"text-4xl font-semibold flex gap-1 items-end"}>
       <RolledNumber

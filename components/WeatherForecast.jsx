@@ -13,7 +13,7 @@ const WeatherForecast = ({ className }) => {
       <div className={`flex relative ${styles.gaps} h-full`}>
         <SideBar className={"basis-2/5 h-full"} />
         <div className={`flex flex-col w-full ${styles.gaps}`}>
-          <TopBar className={""} />
+          <TopBar />
           <DayHighlights className={"flex-1"} />
         </div>
       </div>
