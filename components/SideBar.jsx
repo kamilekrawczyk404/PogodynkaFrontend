@@ -27,8 +27,6 @@ const SideBar = ({ className = "" }) => {
     ]);
   }, [city]);
 
-  console.log(city);
-
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
       <div

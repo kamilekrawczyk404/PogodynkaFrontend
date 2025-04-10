@@ -6,39 +6,114 @@ import ActiveIndicator from "@/components/ActiveIndicator";
 import { AnimatePresence, motion } from "framer-motion";
 import Form from "@/components/Form";
 import PopUpContainer from "@/components/PopUpContainer";
+import { useDispatch, useSelector } from "react-redux";
+import { login, setUser } from "@/redux/authSlice";
+import { useRouter } from "next/navigation";
 
 const AuthenticationForms = ({ className = "" }) => {
   const [selectedFormTypeIndex, setSelectedFormTypeIndex] = useState(0);
+  const router = useRouter();
+  const dispatch = useDispatch();
 
-  const forms = [
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  const [forms, setForms] = useState([
     {
       type: "signUp",
       name: "Sign Up",
       title: "Create a new account",
-      endpoint: "/api/auth/sign-up",
+      endpoint: "http://localhost:3000/api/auth/register",
       lowerText: "Already have account?",
       lowerTextLinkText: "Sign in",
       submitButtonTitle: "Sign up",
+      globalError: "",
       fields: [
-        { name: "Login", value: "", placeholder: "Enter your login" },
-        { name: "Name", value: "", placeholder: "Enter your name" },
-        { name: "Password", value: "", placeholder: "Enter your password" },
+        {
+          name: "Login",
+          value: "",
+          placeholder: "Enter your login",
+          errorMessage: "",
+        },
+        {
+          name: "Name",
+          value: "",
+          placeholder: "Enter your name",
+          errorMessage: "",
+        },
+        {
+          name: "Password",
+          value: "",
+          placeholder: "Enter your password",
+          errorMessage: "",
+        },
       ],
     },
     {
       type: "singIn",
       name: "Sign In",
       title: "Login to your account",
-      endpoint: "/api/auth/sign-in",
+      endpoint: "http://localhost:3000/api/auth/login",
       lowerText: "Don't have an account?",
       lowerTextLinkText: "Sing up",
       submitButtonTitle: "Sign In",
+      globalError: "",
       fields: [
-        { name: "Login", value: "", placeholder: "Enter your login" },
-        { name: "Password", value: "", placeholder: "Enter your password" },
+        {
+          name: "Login",
+          value: "",
+          placeholder: "Enter your login",
+          errorMessage: "",
+        },
+        {
+          name: "Password",
+          value: "",
+          placeholder: "Enter your password",
+          errorMessage: "",
+        },
       ],
     },
-  ];
+  ]);
+
+  const handleFormSubmit = async (formData, endpoint) => {
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+
+        if (selectedFormTypeIndex === 1) {
+          dispatch(login(data));
+          router.push("/");
+        } else {
+          setSelectedFormTypeIndex(1);
+        }
+      } else {
+        const errorData = await response.json();
+
+        setForms((prev) =>
+          prev.toSpliced(selectedFormTypeIndex, 1, {
+            ...prev[selectedFormTypeIndex],
+            globalError: errorData?.error ? errorData.error : "",
+            fields: prev[selectedFormTypeIndex].fields.map((field) => ({
+              ...field,
+              errorMessage: errorData[field.name] ? errorData[field.name] : "",
+            })),
+          }),
+        );
+
+        // alert(errorData.message || "An error occurred.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred.");
+    }
+  };
 
   return (
     <PopUpContainer
@@ -99,7 +174,7 @@ const AuthenticationForms = ({ className = "" }) => {
                   selectedFormTypeIndex === key ? "" : ""
                 }`}
               >
-                <Form {...form} />
+                <Form {...form} onSubmit={handleFormSubmit} />
               </motion.div>
             ),
         )}

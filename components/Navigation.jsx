@@ -6,17 +6,34 @@ import { usePathname } from "next/navigation";
 import OuterContainer from "@/components/OuterContainer";
 import LinedButtons from "@/components/LinedButtons";
 import ActiveIndicator from "@/components/ActiveIndicator";
+import { Icons } from "@/components/Icons";
+import { logout } from "@/redux/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import ActionButton from "@/components/ActionButton";
 
 const Navigation = () => {
+  const dispatch = useDispatch();
   const pathname = usePathname();
+
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   const pathLinks = [
     { pathname: "/", name: "Weather" },
-    {
-      pathname: "/auth",
-      name: "Authorization",
-    },
+    ...(!isAuthenticated ? [{ pathname: "/auth", name: "Authorization" }] : []),
   ];
+
+  const selectUserHomeLocation = async () => {
+    const response = await fetch("/api/user/home", {
+      method: "POST",
+      body: JSON.stringify({ user }),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  };
 
   return (
     <OuterContainer
@@ -42,8 +59,38 @@ const Navigation = () => {
           </ActiveIndicator>
         )}
       />
-      <div className={"md:absolute lg:right-8 right-4 md:block hidden"}>
-        <div className={"rounded-full bg-neutral-100 w-10 aspect-square"}></div>
+      <div
+        className={
+          "md:absolute lg:right-8 right-4 md:flex hidden items-center gap-4"
+        }
+      >
+        {isAuthenticated && (
+          <>
+            <div
+              className={`flex gap-4 items-center ${styles.borderColor} border-[1px] rounded-xl px-3 py-2`}
+            >
+              {/*will be used in the further implementation*/}
+              {/*<Selector*/}
+              {/*  items={[{ item: "nana" }, { item: "nana" }]}*/}
+              {/*  render={(item) => <div key={item.item}>{item.item}</div>}*/}
+              {/*>*/}
+              {/*  <Icons.Star className={"text-amber-400"} />*/}
+              {/*</Selector>*/}
+              <ActionButton
+                className={"text-xl"}
+                onClick={selectUserHomeLocation}
+              >
+                <Icons.Home />
+              </ActionButton>
+              <ActionButton className={"text-xl"} onClick={handleLogout}>
+                <Icons.Logout />
+              </ActionButton>
+            </div>
+            <div
+              className={"rounded-full bg-neutral-100 w-10 aspect-square"}
+            ></div>
+          </>
+        )}
       </div>
     </OuterContainer>
   );

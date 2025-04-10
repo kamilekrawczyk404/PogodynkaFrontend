@@ -18,7 +18,7 @@ const SearchInput = ({ onSubmit, ...props }) => {
   }, [inputRef.current]);
 
   return (
-    <div className={"relative w-full"}>
+    <div className={"relative w-full h-full"}>
       <button
         className={"absolute left-2 top-1/2 -translate-y-1/2"}
         onClick={() => onSubmit(search)}

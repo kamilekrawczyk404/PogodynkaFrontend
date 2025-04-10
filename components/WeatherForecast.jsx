@@ -1,24 +1,28 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { styles } from "@/styles";
 import SideBar from "@/components/SideBar";
 import TopBar from "@/components/TopBar";
 import DayHighlights from "@/components/DayHighlights";
-import { Provider, useSelector } from "react-redux";
-import store from "@/redux/store";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import UserLocation from "@/components/UserLocation";
 import PopUpContainer from "@/components/PopUpContainer";
+import { login } from "@/redux/authSlice";
+import jwt from "jsonwebtoken";
 
 const WeatherForecast = ({ className }) => {
-  return (
-    <Provider store={store}>
-      <WeatherContent />
-    </Provider>
-  );
-};
-
-const WeatherContent = () => {
   const { loading, weatherData } = useSelector((state) => state.weather);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const data = jwt.decode(token, process.env.AUTH_SECRET_KEY);
+
+    if (token && token.length && data?.userId) {
+      dispatch(login(token));
+      dispatch(setUser({ id: data.userId }));
+    }
+  }, []);
 
   const isLoading = weatherData === null || loading;
   return (

@@ -1,22 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "@/components/Input";
 import SubmitButton from "@/components/SubmitButton";
+import ErrorMessage from "@/components/ErrorMessage";
 
 const Form = ({
   title,
   submitButtonTitle,
   lowerText,
   lowerTextLinkText,
+  globalError,
   fields,
   endpoint,
+  onSubmit,
 }) => {
-  const [formFields, setFormFields] = React.useState([]);
+  const [formFields, setFormFields] = useState([]);
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
-    await fetch(endpoint, {
-      ...fields.map((field) => ({ value: field.value, name: field.name })),
-    });
+    try {
+      const formData = formFields.reduce((acc, field) => {
+        acc[field.name] = field.value;
+        return acc;
+      }, {});
+
+      await onSubmit(formData, endpoint);
+    } catch (error) {
+      console.error("Error in form submission:", error);
+    }
   };
 
   const onInputChange = (e, name) => {
@@ -27,6 +37,7 @@ const Form = ({
       prev.toSpliced(oldFieldIndex, 1, {
         ...oldField,
         value: e.target.value,
+        errorMessage: "",
       }),
     );
   };
@@ -37,16 +48,9 @@ const Form = ({
     <form className={"flex flex-col gap-4 w-full"} onSubmit={onFormSubmit}>
       <h2 className={"text-3xl"}>{title}</h2>
 
+      <ErrorMessage message={globalError} />
       {formFields.map((input, key) => (
         <div key={key} className={"flex flex-col gap-1 group"}>
-          <label
-            htmlFor={input.name}
-            className={
-              "text-sm group-focus-within:text-purple-700 transition-all ease-in-out"
-            }
-          >
-            {input.name}
-          </label>
           <Input
             id={key}
             value={input.value}
@@ -54,6 +58,8 @@ const Form = ({
             onChange={(e) => onInputChange(e, input.name)}
             placeholder={input.placeholder}
             className={"peer"}
+            errorMessage={input.errorMessage}
+            globalError={globalError}
           />
         </div>
       ))}

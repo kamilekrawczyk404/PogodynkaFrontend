@@ -3,16 +3,7 @@ import "./globals.css";
 import React from "react";
 import Navigation from "@/components/Navigation";
 import { styles } from "@/styles";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { Providers } from "@/app/providers";
 
 export const metadata = {
   title: "Create Next App",
@@ -24,10 +15,12 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         suppressHydrationWarning
-        className={`${geistSans.variable} ${geistMono.variable}  ${styles.bodyBgColor} ${styles.textDefault} antialiased lg:h-screen lg:overflow-y-hidden relative`}
+        className={` ${styles.bodyBgColor} ${styles.textDefault} antialiased lg:h-screen lg:overflow-y-hidden relative`}
       >
-        <Navigation />
-        <div className={"relative lg:h-[calc(100vh-6.5rem)]"}>{children}</div>
+        <Providers>
+          <Navigation />
+          <div className={"relative lg:h-[calc(100vh-6.5rem)]"}>{children}</div>
+        </Providers>
       </body>
     </html>
   );
