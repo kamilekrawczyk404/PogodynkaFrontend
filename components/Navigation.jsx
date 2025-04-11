@@ -44,7 +44,8 @@ const Navigation = () => {
       return;
     }
 
-    dispatch(fetchWeatherData(user.homeLocation.coords));
+    console.log(user.homeLocation);
+    dispatch(fetchWeatherData(user.homeLocation.coord));
   };
 
   return (
