@@ -20,6 +20,7 @@ const SideBar = ({ className = "" }) => {
 
   useEffect(() => {
     setCityListItems([
+      { title: "City", value: city.name },
       { title: "Population", value: city.population },
       { title: "Lat", value: city.coord.lat },
       { title: "Lon", value: city.coord.lon },
@@ -79,7 +80,7 @@ const SideBar = ({ className = "" }) => {
         <StaggerList
           className={"flex flex-col gap-2"}
           items={cityListItems}
-          delay={0.25}
+          delay={10}
           render={(item) => (
             <WeatherSecondaryFeature
               // icon={<Image {...item.image} fill />}

@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import WeatherMainFeature from "@/components/WeatherMainFeature";
 import { Icons } from "@/components/Icons";
 import { motion } from "framer-motion";
+import { styles } from "@/styles";
 
 const formatDate = (time, timezone) => {
   const date = new Date((time + timezone) * 1000);
@@ -62,18 +63,18 @@ const AnimatedArrow = ({ direction = "bt" }) => {
     <>
       <motion.span
         className={`absolute left-1/2 top-1/2 origin-top-left ${
-          direction !== "bt" ? "rotate-180" : ""
-        }`}
+          styles.textAccent
+        } ${direction !== "bt" ? "rotate-180" : ""}`}
         initial={{ translateY: translations.first.initial, translateX: "-50%" }}
         animate={{ translateY: translations.first.animate }}
         transition={{ type: "spring", delay: 0.25, duration: 1.5 }}
       >
-        <Icons.Arrow className={"text-white"} />
+        <Icons.Arrow />
       </motion.span>
       <motion.span
         className={`absolute left-1/2 top-1/2 origin-top-left ${
-          direction !== "bt" ? "rotate-180" : ""
-        }`}
+          styles.textAccent
+        } ${direction !== "bt" ? "rotate-180" : ""}`}
         initial={{
           translateY: translations.second.initial,
           translateX: "-50%",
@@ -81,7 +82,7 @@ const AnimatedArrow = ({ direction = "bt" }) => {
         animate={{ translateY: translations.second.animate }}
         transition={{ type: "spring", delay: 1, duration: 1 }}
       >
-        <Icons.Arrow className={"text-white"} />
+        <Icons.Arrow />
       </motion.span>
     </>
   );

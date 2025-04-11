@@ -11,6 +11,9 @@ import { logout, setUser } from "@/redux/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ActionButton from "@/components/ActionButton";
 import { showPopUp } from "@/redux/popUpSlice";
+import { fetchWeatherData } from "@/redux/weatherSlice";
+import OverlayContainer from "@/components/OverlayContainer";
+import BorderContainer from "@/components/BorderContainer";
 
 const Navigation = () => {
   const dispatch = useDispatch();
@@ -41,17 +44,12 @@ const Navigation = () => {
       return;
     }
 
-    const response = await fetch("/api/user/home", {
-      method: "POST",
-      body: JSON.stringify({ user }),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    dispatch(fetchWeatherData(user.homeLocation.coords));
   };
 
   return (
     <OuterContainer
-      className={`flex md:flex-row flex-col md:gap-0 gap-3 justify-between items-center py-3`}
+      className={`flex relative md:flex-row flex-col md:gap-0 gap-3 justify-between items-center py-3`}
     >
       <div className={`md:absolute lg:left-8 left-4`}>
         <Link href={"/"} className={`text-2xl ${styles.textDefault}`}>
@@ -80,8 +78,8 @@ const Navigation = () => {
       >
         {isAuthenticated && (
           <>
-            <div
-              className={`flex gap-4 items-center ${styles.borderColor} border-[1px] rounded-xl px-3 py-2`}
+            <BorderContainer
+              className={`flex gap-4 items-center rounded-xl px-4 py-2`}
             >
               {/*will be used in the further implementation*/}
               {/*<Selector*/}
@@ -91,18 +89,20 @@ const Navigation = () => {
               {/*  <Icons.Star className={"text-amber-400"} />*/}
               {/*</Selector>*/}
               <ActionButton
-                className={"text-xl"}
+                className={"text-lg"}
                 onClick={selectUserHomeLocation}
               >
                 <Icons.Home />
               </ActionButton>
-              <ActionButton className={"text-xl"} onClick={handleLogout}>
+              <ActionButton className={"text-lg"} onClick={handleLogout}>
                 <Icons.Logout />
               </ActionButton>
-            </div>
-            <div
-              className={"rounded-full bg-neutral-100 w-10 aspect-square"}
-            ></div>
+            </BorderContainer>
+            <BorderContainer className={`rounded-full h-[2rem] aspect-square`}>
+              <span className={"text-xl text-center inline-block w-full"}>
+                {user.name.substring(0, 1).toUpperCase()}
+              </span>
+            </BorderContainer>
           </>
         )}
       </div>

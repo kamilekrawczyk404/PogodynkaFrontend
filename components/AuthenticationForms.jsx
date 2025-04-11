@@ -46,6 +46,7 @@ const AuthenticationForms = ({ className = "" }) => {
           value: "",
           placeholder: "Enter your password",
           errorMessage: "",
+          type: "password",
         },
       ],
     },
@@ -70,6 +71,7 @@ const AuthenticationForms = ({ className = "" }) => {
           value: "",
           placeholder: "Enter your password",
           errorMessage: "",
+          type: "password",
         },
       ],
     },
@@ -89,11 +91,11 @@ const AuthenticationForms = ({ className = "" }) => {
         const data = await response.json();
 
         if (selectedFormTypeIndex === 1) {
+          dispatch(login(data));
+          router.push("/");
           dispatch(
             showPopUp({ message: "You have been logged in!", type: "success" }),
           );
-          dispatch(login(data));
-          router.push("/");
         } else {
           setSelectedFormTypeIndex(1);
           dispatch(
@@ -112,12 +114,11 @@ const AuthenticationForms = ({ className = "" }) => {
             globalError: errorData?.error ? errorData.error : "",
             fields: prev[selectedFormTypeIndex].fields.map((field) => ({
               ...field,
+              value: formData[field.name],
               errorMessage: errorData[field.name] ? errorData[field.name] : "",
             })),
           }),
         );
-
-        // alert(errorData.message || "An error occurred.");
       }
     } catch (error) {
       console.error("Error:", error);

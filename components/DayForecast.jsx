@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import Card from "@/components/Card";
+import BorderContainer from "@/components/BorderContainer";
 import { useSelector } from "react-redux";
 import { celsiusToFahrenheit } from "@/redux/weatherSlice";
 
@@ -9,7 +9,7 @@ const DayForecast = ({ day, active, ...props }) => {
   const { temperatureUnit } = useSelector((state) => state.weather);
 
   return (
-    <Card className={"w-full p-4"} active={active} {...props}>
+    <BorderContainer className={"w-full p-4"} active={active} {...props}>
       <span>{day.date.substring(0, 3)}</span>
       <div className={"relative min-h-[5rem] aspect-ratio"}>
         <Image src={`/weather/${day.maxTemp.icon}`} alt={"Weather icon"} fill />
@@ -32,7 +32,7 @@ const DayForecast = ({ day, active, ...props }) => {
           °{temperatureUnit}
         </span>
       </div>
-    </Card>
+    </BorderContainer>
   );
 };
 

@@ -14,6 +14,7 @@ import ActionButton from "@/components/ActionButton";
 import { postFetcher } from "@/app/helpers";
 import { setUserHomeLocation } from "@/redux/authSlice";
 import { styles } from "@/styles";
+import { showPopUp } from "@/redux/popUpSlice";
 
 const TopBar = ({ className = "" }) => {
   const dispatch = useDispatch();
@@ -51,9 +52,12 @@ const TopBar = ({ className = "" }) => {
       user,
       city: weatherData.city,
     })
-      .then((data) =>
-        dispatch(setUserHomeLocation(data.updatedUser.homeLocation)),
-      )
+      .then((data) => {
+        dispatch(setUserHomeLocation(data.updatedUser.homeLocation));
+        dispatch(
+          showPopUp({ message: "Location has been changed", type: "info" }),
+        );
+      })
       .catch((err) => console.warn(err));
   };
 

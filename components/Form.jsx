@@ -15,8 +15,33 @@ const Form = ({
 }) => {
   const [formFields, setFormFields] = useState([]);
 
+  const validFormFields = () => {
+    // ensure user fill all fields
+    if (formFields.some((field) => field.value.length === 0)) {
+      setFormFields((prev) =>
+        prev.map((field) => {
+          if (field.value.length === 0) {
+            return {
+              ...field,
+              errorMessage: "This field must be filled",
+            };
+          }
+          return field;
+        }),
+      );
+
+      return false;
+    }
+    return true;
+  };
+
   const onFormSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validFormFields()) {
+      return;
+    }
+
     try {
       const formData = formFields.reduce((acc, field) => {
         acc[field.name] = field.value;
@@ -42,7 +67,9 @@ const Form = ({
     );
   };
 
-  useEffect(() => setFormFields(fields), [fields]);
+  useEffect(() => {
+    setFormFields(fields);
+  }, [fields]);
 
   return (
     <form className={"flex flex-col gap-4 w-full"} onSubmit={onFormSubmit}>
@@ -55,6 +82,7 @@ const Form = ({
             id={key}
             value={input.value}
             name={input.name}
+            type={input?.type || "text"}
             onChange={(e) => onInputChange(e, input.name)}
             placeholder={input.placeholder}
             className={"peer"}

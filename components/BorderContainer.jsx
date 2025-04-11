@@ -2,7 +2,12 @@
 import React from "react";
 import { styles } from "@/styles";
 
-const Card = ({ className = "", active = false, children, ...props }) => {
+const BorderContainer = ({
+  className = "",
+  active = false,
+  children,
+  ...props
+}) => {
   return (
     <div
       className={`${
@@ -17,4 +22,4 @@ const Card = ({ className = "", active = false, children, ...props }) => {
   );
 };
 
-export default Card;
+export default BorderContainer;
