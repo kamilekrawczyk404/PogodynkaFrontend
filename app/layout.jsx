@@ -4,6 +4,7 @@ import React from "react";
 import Navigation from "@/components/Navigation";
 import { styles } from "@/styles";
 import { Providers } from "@/app/providers";
+import PopUp from "@/components/PopUp";
 
 export const metadata = {
   title: "Create Next App",
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
         <Providers>
           <Navigation />
           <div className={"relative lg:h-[calc(100vh-6.5rem)]"}>{children}</div>
+          <PopUp />
         </Providers>
       </body>
     </html>

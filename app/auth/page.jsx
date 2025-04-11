@@ -4,7 +4,7 @@ import { styles } from "@/styles";
 import Image from "next/image";
 import Link from "next/link";
 import AuthenticationForms from "@/components/AuthenticationForms";
-import PopUpContainer from "@/components/PopUpContainer";
+import AnimatedContainer from "@/components/AnimatedContainer";
 import OverlayContainer from "@/components/OverlayContainer";
 
 export default function Auth() {
@@ -13,7 +13,7 @@ export default function Auth() {
       <div
         className={`relative flex lg:flex-row flex-col-reverse justify-center h-full ${styles.gaps} ${styles.verticalPadding} ${styles.bgColor}`}
       >
-        <PopUpContainer
+        <AnimatedContainer
           className={`relative overflow-hidden brightness-80 basis-1/2 rounded-2xl min-h-[10rem] h-full ${styles.bodyBgColor}`}
         >
           <OverlayContainer
@@ -26,7 +26,7 @@ export default function Auth() {
             alt={"Login form image background"}
             fill
           />
-        </PopUpContainer>
+        </AnimatedContainer>
         <AuthenticationForms className={"basis-1/2"} />
       </div>
     </OuterContainer>

@@ -6,7 +6,7 @@ import TopBar from "@/components/TopBar";
 import DayHighlights from "@/components/DayHighlights";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import UserLocation from "@/components/UserLocation";
-import PopUpContainer from "@/components/PopUpContainer";
+import AnimatedContainer from "@/components/AnimatedContainer";
 import { login } from "@/redux/authSlice";
 import jwt from "jsonwebtoken";
 
@@ -28,9 +28,9 @@ const WeatherForecast = ({ className }) => {
   return (
     <div className={`flex relative ${styles.gaps} h-full`}>
       <div className={`flex basis-2/5 h-full flex-col gap-2`}>
-        <PopUpContainer>
+        <AnimatedContainer>
           <UserLocation />
-        </PopUpContainer>
+        </AnimatedContainer>
 
         {!isLoading && <SideBar className={"basis-2/5 h-full"} />}
       </div>

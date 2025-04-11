@@ -7,9 +7,10 @@ import OuterContainer from "@/components/OuterContainer";
 import LinedButtons from "@/components/LinedButtons";
 import ActiveIndicator from "@/components/ActiveIndicator";
 import { Icons } from "@/components/Icons";
-import { logout } from "@/redux/authSlice";
+import { logout, setUser } from "@/redux/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ActionButton from "@/components/ActionButton";
+import { showPopUp } from "@/redux/popUpSlice";
 
 const Navigation = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,9 @@ const Navigation = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(
+      showPopUp({ message: "You have been logged out.", type: "success" }),
+    );
   };
 
   const pathLinks = [
@@ -27,6 +31,16 @@ const Navigation = () => {
   ];
 
   const selectUserHomeLocation = async () => {
+    if (user.homeLocation === null) {
+      dispatch(
+        showPopUp({
+          message: "You haven't set your home location yet!",
+          type: "info",
+        }),
+      );
+      return;
+    }
+
     const response = await fetch("/api/user/home", {
       method: "POST",
       body: JSON.stringify({ user }),

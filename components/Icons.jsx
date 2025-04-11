@@ -3,15 +3,21 @@ import {
   faAngleDown,
   faArrowDown,
   faArrowUp,
+  faExclamationTriangle,
   faEye,
   faHome,
+  faInfo,
   faLocationArrow,
   faLocationCrosshairs,
   faMagnifyingGlass,
   faRightFromBracket,
+  faSquare,
+  faSquareCheck,
+  faSquareXmark,
   faStar,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
+import { styles } from "@/styles";
 
 export const Icons = {
   WindDirection: ({ className = "" }) => (
@@ -43,5 +49,23 @@ export const Icons = {
   ),
   Logout: ({ className = "" }) => (
     <FontAwesomeIcon className={`${className}`} icon={faRightFromBracket} />
+  ),
+  Success: ({ className = "" }) => (
+    <FontAwesomeIcon className={`${className}`} icon={faSquareCheck} />
+  ),
+  Error: ({ className = "" }) => (
+    <FontAwesomeIcon className={`${className}`} icon={faSquareXmark} />
+  ),
+  Info: ({ className = "" }) => (
+    <div className={`flex items-center justify-center relative ${className}`}>
+      <FontAwesomeIcon className={`${className}`} icon={faSquare} />
+      <FontAwesomeIcon
+        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${styles.textAccent} text-lg`}
+        icon={faInfo}
+      />
+    </div>
+  ),
+  Warning: ({ className = "" }) => (
+    <FontAwesomeIcon className={`${className}`} icon={faExclamationTriangle} />
   ),
 };

@@ -5,10 +5,11 @@ import LinedButtons from "@/components/LinedButtons";
 import ActiveIndicator from "@/components/ActiveIndicator";
 import { AnimatePresence, motion } from "framer-motion";
 import Form from "@/components/Form";
-import PopUpContainer from "@/components/PopUpContainer";
+import AnimatedContainer from "@/components/AnimatedContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { login, setUser } from "@/redux/authSlice";
 import { useRouter } from "next/navigation";
+import { showPopUp } from "@/redux/popUpSlice";
 
 const AuthenticationForms = ({ className = "" }) => {
   const [selectedFormTypeIndex, setSelectedFormTypeIndex] = useState(0);
@@ -88,10 +89,19 @@ const AuthenticationForms = ({ className = "" }) => {
         const data = await response.json();
 
         if (selectedFormTypeIndex === 1) {
+          dispatch(
+            showPopUp({ message: "You have been logged in!", type: "success" }),
+          );
           dispatch(login(data));
           router.push("/");
         } else {
           setSelectedFormTypeIndex(1);
+          dispatch(
+            showPopUp({
+              message: "You have created your account.",
+              type: "success",
+            }),
+          );
         }
       } else {
         const errorData = await response.json();
@@ -116,7 +126,7 @@ const AuthenticationForms = ({ className = "" }) => {
   };
 
   return (
-    <PopUpContainer
+    <AnimatedContainer
       className={`w-full h-fit flex flex-col gap-3 rounded-2xl ${styles.paddings} ${styles.bodyBgColor} ${styles.textDefault} ${className}`}
     >
       <LinedButtons
@@ -179,7 +189,7 @@ const AuthenticationForms = ({ className = "" }) => {
             ),
         )}
       </div>
-    </PopUpContainer>
+    </AnimatedContainer>
   );
 };
 

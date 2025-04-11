@@ -2,7 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const PopUpContainer = ({ className = "", children }) => {
+const AnimatedContainer = ({ className = "", children }) => {
   return (
     <motion.div
       initial={{
@@ -24,4 +24,4 @@ const PopUpContainer = ({ className = "", children }) => {
   );
 };
 
-export default PopUpContainer;
+export default AnimatedContainer;
