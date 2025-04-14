@@ -4,7 +4,7 @@ import { styles } from "@/styles";
 import SideBar from "@/components/SideBar";
 import TopBar from "@/components/TopBar";
 import DayHighlights from "@/components/DayHighlights";
-import { Provider, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import UserLocation from "@/components/UserLocation";
 import AnimatedContainer from "@/components/AnimatedContainer";
 import { login } from "@/redux/authSlice";
@@ -20,7 +20,6 @@ const WeatherForecast = ({ className }) => {
 
     if (token && token.length && data?.userId) {
       dispatch(login(token));
-      dispatch(setUser({ id: data.userId }));
     }
   }, []);
 

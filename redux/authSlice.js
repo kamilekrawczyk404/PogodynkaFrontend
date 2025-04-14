@@ -34,11 +34,6 @@ const authSlice = createSlice({
   },
 });
 
-export const {
-  setUserHomeLocation,
-  setUser,
-  setUserSearchHistory,
-  login,
-  logout,
-} = authSlice.actions;
+export const { setUserHomeLocation, setUserSearchHistory, login, logout } =
+  authSlice.actions;
 export default authSlice.reducer;

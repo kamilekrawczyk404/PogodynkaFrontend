@@ -7,7 +7,7 @@ import OuterContainer from "@/components/OuterContainer";
 import LinedButtons from "@/components/LinedButtons";
 import ActiveIndicator from "@/components/ActiveIndicator";
 import { Icons } from "@/components/Icons";
-import { logout, setUser } from "@/redux/authSlice";
+import { logout } from "@/redux/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ActionButton from "@/components/ActionButton";
 import { showPopUp } from "@/redux/popUpSlice";

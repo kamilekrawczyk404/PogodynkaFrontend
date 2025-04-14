@@ -22,9 +22,10 @@ const getMinAndMaxTemp = (dailyData) => {
       temperatures.maxTemp.push({ value: Math.round(maxTemp), icon });
     });
 
+    console.log(temperatures.minTemp.sort((a, b) => a.value - b.value));
     processedData[day] = {
       minTemp: temperatures.minTemp.sort((a, b) => a.value - b.value)[0],
-      maxTemp: temperatures.maxTemp.sort((a, b) => a.value + b.value)[0],
+      maxTemp: temperatures.maxTemp.sort((a, b) => b.value - a.value)[0],
     };
   });
 
